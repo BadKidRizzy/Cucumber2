@@ -1,0 +1,87 @@
+<div class="menu-sidebar" [@visibility]="visibility">
+
+  <div class="menu-header">
+    <div routerLink="/home"><img src="/images/pathevo-logo-white.svg"> College Prep</div>
+    <i class="pull-right icon-cross clickable" (click)="hide()"></i>
+  </div>
+
+  <nav class="navbar-collapse" *ngIf="features">
+    <ul class="nav">
+      <li>
+        <a routerLink="/home" (click)="hide()">
+          <i class="icon icon-home"></i>Home
+        </a>
+      </li>
+      <li [class.hidden]="features.search == HIDE">
+        <a routerLink="/search" (click)="hide()">
+          <i class="icon icon-magnifying-glass"></i>Search
+        </a>
+      </li>
+      <li [class.hidden]="features.assessment_ip1 == HIDE">
+        <a routerLink="/assess" (click)="hide()">
+          <i class="icon icon-line-graph"></i>Discover
+        </a>
+      </li>
+      <li [class.hidden]="features.relate == HIDE">
+        <a routerLink="/relate" (click)="hide()">
+          <i class="icon grunticon-relate"></i>Relate
+        </a>
+      </li>
+      <li [class.hidden]="features.tasks == HIDE">
+        <a routerLink="/tasks" (click)="hide()">
+          <i class="icon grunticon-calendar-check"></i>Tasks
+        </a>
+      </li>
+      <li [class.hidden]="features.advisor_q_a == HIDE">
+        <a routerLink="/advisor" (click)="hide()">
+          <i class="icon icon-chat"></i>Advisor
+        </a>
+      </li>
+    </ul>
+
+    <hr class="divider">
+
+    <div class="name text-center" *ngIf="user">
+      {{user.first_name + ' ' + user.last_name}}
+      <hr>
+    </div>
+
+    <ul class="nav" [class.hidden]="!user">
+      <li>
+        <a routerLink="/profile/about-me" (click)="hide()">
+          <i class="icon grunticon-profile"></i>Profile
+        </a>
+      </li>
+      <li>
+        <a routerLink="/profile/settings" (click)="hide()">
+          <i class="icon icon-cog"></i>Settings
+        </a>
+      </li>
+      <li>
+        <a (click)="logout.emit(); hide()"><i class="icon icon-log-out"></i>Log out</a>
+      </li>
+      <li *ngIf="showUpgrade">
+        <a routerLink="/profile/payment" class="btn btn-default btn-white">Upgrade to Pro</a>
+      </li>
+    </ul>
+
+    <ul class="nav no-auth" [class.hidden]="user">
+      <li><a routerLink="/auth/login" (click)="hide()">Login</a></li>
+      <li><a routerLink="/auth/sign-up" (click)="hide()">Sign Up</a></li>
+    </ul>
+
+  </nav>
+
+  <div class="menu-footer">
+    <div class="text-center">
+      &copy; 2007-{{currentYear}} Owen Software
+    </div>
+    <div class="links">
+      <a target="_blank" href="https://pathevo.zendesk.com/hc/en-us/community/topics">Help</a>
+      <a target="_blank" href="https://pathevo.zendesk.com/hc/en-us/requests/new">Contact</a>
+      <a routerLink="/data-sources" (click)="hide()">Sources</a>
+      <a routerLink="/documents" [queryParams]="{tab: 'terms'}" (click)="hide()">Terms & Privacy</a>
+    </div>
+  </div>
+
+</div>

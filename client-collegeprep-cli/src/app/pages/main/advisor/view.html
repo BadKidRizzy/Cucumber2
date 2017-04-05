@@ -1,0 +1,218 @@
+<div class="container pos-relative">
+
+  <div class="row header">
+    <div class="col-xs-12">
+      <h1 class="text-primary">Advisor</h1>
+    </div>
+    <div class="col-xs-12">
+      <p>Preparing for the college application can be overwhelming. College Advisor puts experts at your fingertips.
+        Select from the available topic areas of expertise and submit your questions. Our experts are standing by to
+        assist you.</p>
+    </div>
+  </div>
+
+  <div class="well mt10">
+    <div class="row">
+
+      <div class="col-sm-5 col-md-4 col-lg-3 list">
+        <aside>
+          <ul>
+            <li (click)="addNote()" class="text-primary">
+              <a><i class="icon-help-with-circle"></i> Ask a new question</a>
+            </li>
+            <li *ngFor="let note of notes"
+                (click)="changeNote(note); showSidebar = true"
+                [class.active]="note == currentNote">
+              <a>{{note.title}}</a>
+              <!--"showSidebar = true" placed here instead of in changeNote() due to that function being called after a new message is sent-->
+              <div><small class="text-muted">{{note.status}} : {{note.modifiedText}}</small></div>
+            </li>
+          </ul>
+        </aside>
+      </div>
+
+      <div class="col-sm-7 col-md-8 col-lg-9 draft" [class.active]="showSidebar">
+
+        <!-- new message -->
+        <div *ngIf="!viewNote">
+          <div class="form-group has-feedback">
+            <label for="question" class="sr-only">question</label>
+            <input id="question" type="text" class="form-control" autocomplete="off"
+                   placeholder="What do you need help with?" name="question" maxlength="400"
+                   required
+                   [(ngModel)]="question.title">
+            <span class="icon-warning form-control-feedback" style="right:5px"></span>
+            <div class="feedback"><div class="help-block">Please enter a subject to your question</div></div>
+          </div>
+
+          <!-- topic dropdown menu -->
+          <p class="mt15">For the best advising, please select the most relevant topic for your question.</p>
+
+          <div class="row">
+            <div class="col-sm-7 col-md-5 col-lg-4">
+              <select class="form-control" (change)="topicChanged($event)"
+                      name="select-topic"
+                      [(ngModel)]="question.topic"
+                      [class.has-error]="invalidTopic">
+                <option value="-1" disabled>Please select a topic</option>
+                <option *ngFor="let topic of topics" [value]="topic.id">{{topic.name}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mt10" *ngIf="chargeable">
+            <div class="col-sm-12">
+              <p>This topic is a paid service. You will be prompted for credit card payment at submission for ${{paymentAmount}}.</p>
+              <p class="mb0">{{serviceDescription}}</p>
+            </div>
+          </div>
+
+          <div class="row full-descript mt20">
+            <div class="col-xs-12 col-sm-10">
+              <div class="has-feedback">
+                <label for="new-question-body" class="sr-only">full description of your question</label>
+                <textarea id="new-question-body" class="form-control" name="questionBody"
+                          placeholder="Please provide a full description of your question"
+                          required
+                          maxlength="65536"
+                          [(ngModel)]="question.body">
+                </textarea>
+                <div class="feedback"><div class="help-block">Please enter a question</div></div>
+              </div>
+            </div>
+            <div class="hidden-xs col-sm-2">
+              <button (click)="sendNewMessage()" type="submit"
+                      class="btn btn-primary send-message">
+                <span class="icon-paper-plane"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- new question file selection -->
+          <div class="row mt10" *ngIf="allowAttachment">
+            <div class="col-xs-12 file-upload">
+              <!-- two places to change acceptable file extensions -->
+              <div><i class="icon-attachment"></i> .pdf, .doc, .docx allowed:</div>
+              <input type="file" id="new-question-file" accept=".pdf,.doc,.docx" single/>
+
+              <!--<input type="file" ng2FileSelect [uploader]="uploader" />-->
+              <!--<div ng2FileDrop-->
+                   <!--[ngClass]="{'nv-file-over': hasBaseDropZoneOver}"-->
+                   <!--(fileOver)="fileOverBase($event)"-->
+                   <!--[uploader]="uploader"-->
+                   <!--class="well my-drop-zone">Base drop zone-->
+              <!--</div>-->
+            </div>
+          </div>
+
+          <div class="row visible-xs mt15">
+            <div class="col-xs-6">
+              <button class="btn btn-danger-invert btn-sm" (click)="showSidebar = false">Cancel</button>
+            </div>
+            <div class="col-xs-6">
+              <button class="btn btn-primary btn-sm pull-right" (click)="sendNewMessage()">
+                <i class="icon-cycle spin fades" [class.display]="isSending"></i>
+                <span>Send</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- selected message -->
+        <div *ngIf="viewNote">
+          <div class="row">
+            <div class="col-xs-12">
+              <em><h2 class="mt0"><strong>Q: </strong>{{currentNote.title}}</h2></em>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <span class="label label-default">{{currentNote.topicName}}</span>
+            </div>
+            <div class="col-xs-12 col-sm-6 attach-col" *ngIf="currentNote.nbrAttachments > 0">
+              <small class="text-muted">{{currentNote.nbrAttachments}} attachments <i class="icon-attachment"></i></small>
+            </div>
+          </div>
+
+          <hr>
+
+          <!-- list of comments to the question -->
+          <div class="row">
+            <ul class="col-xs-12">
+              <li class="message" *ngFor="let comment of currentNote.comments">
+                <h3 class="mt0" [ngClass]="comment.authorType == 'user' ? 'text-primary' : 'msg-advisor'">{{comment.author}}</h3>
+                <span class="time">{{comment.modifiedText}}</span>
+                <div class="filename pull-right" *ngIf="comment.attachments.length > 0">
+                  <ul>
+                    <li class="filename pull-right" *ngFor="let file of comment.attachments">
+                      <a href="{{file.url}}" download>{{file.name}}</a> <em>({{file.size}})</em>
+                    </li>
+                  </ul>
+                </div>
+                <br>
+                <p style="padding-left:20px;">{{comment.body}}</p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="row mt10 full-descript">
+            <div class="col-xs-12 col-sm-10">
+              <div class="has-feedback">
+                 <label for="reply-body" class="sr-only">full description of your question</label>
+                 <textarea id="reply-body" class="form-control" name="reply-body"
+                           placeholder="Please provide a full description of your question"
+                           maxlength="65536" required
+                           [(ngModel)]="replyMessage">
+                  </textarea>
+                <div class="feedback"><div class="help-block">Please enter a reply</div></div>
+              </div>
+            </div>
+            <div class="hidden-xs col-sm-2">
+              <button (click)="sendReplyMessage()" type="submit" class="btn btn-primary send-message">
+                <span class="icon-paper-plane"></span>
+              </button>
+              <!--<br>-->
+              <!--<button type="file" class="file-upload">-->
+                <!--<span class="icon-attachment"></span>-->
+              <!--</button>-->
+              <!--<ul class="attachments">-->
+                <!--<li><a href="#/link-to-DL-attachment">Attachment name (size)</a></li>-->
+              <!--</ul>-->
+            </div>
+          </div>
+
+          <div class="row mt10" *ngIf="allowAttachment">
+            <!-- new question file selection -->
+            <div class="col-xs-12 file-upload">
+              <span class="icon-attachment"></span>
+              <!-- two places to change acceptable file extensions -->
+              <div class="file-types-allowed">.pdf, .doc, .docx allowed:</div>
+              <input type="file" id="reply-question-file" accept=".pdf,.doc,.docx" single/>
+            </div>
+          </div>
+
+          <div class="row visible-xs mt15">
+            <div class="col-xs-6">
+              <button class="btn btn-danger-invert btn-sm" (click)="showSidebar = false">Cancel</button>
+            </div>
+            <div class="col-xs-6">
+              <button class="btn btn-primary btn-sm pull-right" (click)="sendReplyMessage()">Send</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <peek-overlay
+      *ngIf="accessLevel < FULL_ACCESS"
+      rerouteTo="/relate"
+      [promoMessage]="featureDescription+'<br>Upgrade now to access this feature.'"
+      [loginMessage]="featureDescription+'<br>Sign up or log in to use this feature.'"
+      [accessLevel]="accessLevel">
+  </peek-overlay>
+
+</div>

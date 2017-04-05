@@ -1,0 +1,8 @@
+
+{
+  "/api": {
+    "target": "https://api-staging.pathevo.com",
+    "proxyTimeout": 5000,
+    "secure": false
+  }
+}

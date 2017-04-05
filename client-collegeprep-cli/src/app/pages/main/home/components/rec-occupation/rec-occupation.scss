@@ -1,0 +1,83 @@
+@import "../../../../../variables";
+
+.outlook {
+  margin-top: -10px;
+}
+.icon-leaf {
+  color: #2F9929;
+}
+.icon-new {
+  color: #E6C81E;
+}
+.icon-briefcase {
+  color: #166890;
+}
+.icon-arrow-bold-up {
+  color: #7C6BB2;
+}
+.icon-leaf, .icon-new, .icon-briefcase,.icon-arrow-bold-up {
+  font-size: 38px;
+}
+
+.prep {
+  & > * {
+    display: inline-block;
+  }
+  & > img {
+    width: 50px;
+    padding: 5px 10px 0 0;
+    vertical-align: top;
+  }
+}
+dl {
+  margin-bottom: 0;
+}
+dt {
+  font-size: 16px;
+  height: 34px;
+  margin-top: 10px;
+}
+
+.text-nowrap {
+  font-size: 12px;
+}
+
+@media (min-width: $sm) {
+  .prep {
+    & > div {
+      width: calc(100% - 60px);
+    }
+    & > img {
+      padding-bottom: 5px;
+    }
+  }
+  .bottom {
+    margin-top: -5px;
+    & > .col-xs-6 {
+      width: 20%;
+      padding: 0;
+      &:first-child {
+        padding-left: 15px;
+      }
+      &:last-child {
+        padding-right: 15px;
+      }
+    }
+  }
+}
+
+@media (max-width: $sm - 1) {
+  .logo {
+    height: 130px;
+  }
+  .bottom {
+    margin-top: -15px;
+  }
+  .outlook, dl {
+    margin-top: 10px;
+  }
+  .prep > div {
+    width: 125px;
+    text-align: left;
+  }
+}

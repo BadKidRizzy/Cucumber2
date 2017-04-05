@@ -1,0 +1,3 @@
+date
+cucumber -t @smoke_test -f html -o report_smoke_test.html
+date

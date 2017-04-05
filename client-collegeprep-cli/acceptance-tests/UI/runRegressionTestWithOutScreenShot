@@ -1,0 +1,3 @@
+date
+cucumber screen=off -t @regression -f html -o report_regression_test_without_screenShot.html
+date

@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-3 logo text-center">
+    <img src="/images/career-clusters/{{occupation.logo.split(' ').join('-')}}" alt="occupation logo"
+         onerror="this.onerror=null;this.src='/images/default-content/occupations-line.svg';">
+  </div>
+  <div class="col-xs-12 col-sm-9 text-center-xs">
+    <h2 class="text-primary">
+      <a routerLink="/detail/occupations/{{occupation.id}}">
+        <!--Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary-->
+        {{occupation.Name}}
+        <!--{{occupation.Name.substring(0, 45) + (occupation.Name.length > 45 ? '...' : '') }}-->
+      </a>
+    </h2>
+    <div *ngIf="occupation.prepLevel != null" title="Prep Level" class="mt20 prep">
+      <img src="/images/edu-preps/level-of-prep-{{occupation.prepLevel}}.svg">
+      <div>
+        <strong>Level of Prep:</strong>
+        <span>{{ occupation.prepDegree }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<div class="bottom row">
+  <dl class="col-xs-6 text-center">
+    <dt>{{ (occupation['Average Annual Income'] | currency:'USD':true:'1.0-0') || 'N/A' }}</dt>
+    <dd class="text-nowrap">Average Salary</dd>
+  </dl>
+  <div title="Green Job" class="outlook col-xs-6 text-center" [class.hidden]="!occupation.isGreenJob">
+    <span class="icon-leaf"></span>
+    <div class="text-nowrap">Green Job</div>
+  </div>
+  <div title="New and Emerging" class="outlook col-xs-6 text-center" [class.hidden]="!occupation.isEmerging">
+    <span class="icon-new"></span>
+    <div class="text-nowrap">New & Emerging</div>
+  </div>
+  <div title="Numerous Job Openings" class="outlook col-xs-6 text-center" [class.hidden]="!occupation.isNumerous">
+    <span class="icon-briefcase"></span>
+    <div class="text-nowrap">Numerous Jobs</div>
+  </div>
+  <div title="Rapid Growth" class="outlook col-xs-6 text-center" [class.hidden]="!occupation.isGrowth">
+    <span class="icon-arrow-bold-up"></span>
+    <div class="text-nowrap">Rapid Growth</div>
+  </div>
+</div>

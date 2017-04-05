@@ -1,0 +1,47 @@
+@import "../../variables";
+
+.darken-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: -1000;
+  opacity: 0;
+
+  &.display {
+    z-index: 800;
+    @media (max-width: $sm - 1){
+      opacity: 0.5;
+    }
+  }
+
+}
+
+:host /deep/ {
+
+  main > router-outlet + * > .container {
+    margin-top: 20px;
+  }
+
+  .page-error {
+    margin-top: 3%;
+    img {
+      display: block;
+      margin: 0 auto 25px;
+      max-width: 100%;
+    }
+    h1 {
+      margin: 0 0 45px;
+      padding: 0 10px;
+    }
+  }
+
+  home-page img.error {
+    width: 400px;
+  }
+
+  profile-page aside > nav.display {
+    height: 445px;
+  }
+  
+}

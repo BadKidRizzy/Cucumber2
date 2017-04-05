@@ -1,0 +1,3 @@
+date
+cucumber screen=off -t @smoke_test -f html -o report_smoke_test_without_screenShot.html
+date

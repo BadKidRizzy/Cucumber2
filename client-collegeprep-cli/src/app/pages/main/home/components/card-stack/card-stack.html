@@ -1,0 +1,51 @@
+<div class="stack mt20" *ngIf="!error">
+
+  <div class="well" *ngIf="!recs" style="margin-top: -20px;">Loading...</div>
+  <div class="well rotates"
+       *ngFor="let rec of shownRecs"
+       [@rotateCard]="rec?.animation"
+       (@rotateCard.done)="cardAnimation($event)">
+
+    <div [ngSwitch]="rec?.contentType" class="clearfix">
+      <rec-school     *ngSwitchCase="'US_Institutions'" [school]="rec"></rec-school>
+      <rec-major      *ngSwitchCase="'US_Majors'"       [major]="rec"></rec-major>
+      <rec-occupation *ngSwitchCase="'US_Occupations'"  [occupation]="rec"></rec-occupation>
+      <rec-scholarship *ngSwitchCase="'US_Scholarship'"  [scholarship]="rec"></rec-scholarship>
+      <div            *ngSwitchCase="null">Loading...</div>
+    </div>
+
+    <div class="card-control container" *ngIf="rec">
+      <div class="row">
+        <div class="text-center col-xs-6 btn-wrap">
+          <a href="javascript:void('remove')" class="dismiss-btn btn clickable" (click)="remove(rec)">
+            <i class="icon icon-cross"></i> Hide
+          </a>
+        </div>     
+        <div class=" text-center col-xs-6 btn-wrap popover-parent"> 
+            <popover-content #loginPopover [animation]="true" [closeOnMouseOutside]="true" [closeOnClickOutside]="true">
+              <div class="popover-responsive">
+                <login-popover width='100' *ngIf="!hasAuth" [rerouteTo]="'/home'"></login-popover>
+              </div>
+            </popover-content>
+            <div class="need-login"
+                [popover]="loginPopover"
+                [attr.disabled]="!hasAuth"
+                [popoverDisabled]="hasAuth"
+                [popoverOnHover]="true"
+                [popoverCloseOnMouseOutside]="true"
+                popoverPlacement="top">
+              <a href="javascript:void('fave')" class="fave-btn btn clickable" (click)="toggleFav(rec)">
+                <i class="icon" [ngClass]="rec?.isFav ? 'grunticon-star' : 'grunticon-star-outline' "></i> Favorite
+              </a>
+            </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="well text-center" *ngIf="error" style="padding-bottom: 19px;">
+  <img class="img-thumbnail error" src="/images/500.jpg" alt="500 error">
+  <h3>Sorry, but something may be broken on our side. <br> We'll look into the problem but in the mean time please try refreshing the page.</h3>
+</div>

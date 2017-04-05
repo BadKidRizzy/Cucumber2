@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-3 col-md-4 logo text-center">
+    <img src="{{contentImageHost}}/us_institutions/icons/{{school.id}}.png"
+         onerror="this.onerror=null;this.src='/images/default-content/schools-line.svg';"
+         alt="school logo}" class="img-thumbnail">
+  </div>
+  <div class="col-xs-12 col-sm-9 col-md-8 text-center-xs">
+    <h2 class="text-primary"><a routerLink="/detail/schools/{{school.id}}">{{school.Name}}</a></h2>
+    <div class="text-muted">{{school.Location}}</div>
+    <div class="mt10" *ngIf="school.school_rank != null">Ranked #{{school.school_rank}}</div>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <dl class="col-xs-6 col-sm-3">
+    <dt>${{(school['Out-of-State Tuition and Fees'] | number:'1.0-0') || 'N/A'}}</dt>
+    <dd>Out-of-State Tuition</dd>
+  </dl>
+  <dl class="col-xs-6 col-sm-3">
+    <dt class='stat-bold'>{{(school['Average amount of undergraduate grant or scholarship aid received'] | currency:'USD':true:'1.0-0') || 'N/A'}}</dt>
+    <dd>Average Financial Aid</dd>
+  </dl>
+  <dl class="col-xs-6 col-sm-3">
+    <dt class='stat-bold'>{{(school['Undergraduate Enrollment'] | number:'1.0-0') || 'N/A'}}</dt>
+    <dd>Undergraduate Students</dd>
+  </dl>
+  <dl class="col-xs-6 col-sm-3">
+    <dt class='stat-bold'>{{(school['Admission Rate']/100 | percent:'1.0-0') || 'N/A'}}</dt>
+    <dd>Acceptance Rate</dd>
+  </dl>
+</div>

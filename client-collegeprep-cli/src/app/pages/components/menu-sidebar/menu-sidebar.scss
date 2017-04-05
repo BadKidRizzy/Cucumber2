@@ -1,0 +1,141 @@
+@import '../../../variables';
+
+$totalWidth: 300px;
+$bgColor: #006394;
+$hoverColor: #ffd800;
+
+/deep/ .menu-sidebar {
+
+  background: $bgColor;
+  position: absolute;
+  top: $desktopHeaderHeight;
+  max-width: $totalWidth;
+  width: $totalWidth;
+  bottom: 60px;
+  left: -$totalWidth - 10px;
+  box-shadow: 10px 0 30px rgba(0, 0, 0, .08);
+  z-index: 900;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  color: white;
+
+  @media (max-width: $sm - 1) {
+    top: $mobileHeaderHeight;
+    bottom: 0;
+    width: 90%;
+  }
+
+  .menu-header {
+
+    margin: 6px;
+
+    & > * {
+      display: inline;
+    }
+    img {
+      height: 45px
+    }
+    & > div {
+      font-weight: 100;
+      letter-spacing: 1px;
+      vertical-align: sub;
+      font-size: 20px;
+      padding: 10px 0;
+    }
+    & > i {
+      font-size: 29px;
+      &:hover {
+        color: $hoverColor;
+      }
+    }
+
+  }
+
+  .navbar-collapse {
+    border: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    padding: 0;
+  }
+
+  .nav {
+
+    font-size: 20px;
+
+    .icon::before {
+      margin: -4px 8px 0;
+      font-size: 28px;
+    }
+
+    li {
+      line-height: 40px;
+    }
+    li > .btn-white {
+      color: $bgColor;
+      padding: 10px 20px;
+      background-color: white;
+      margin: 20px;
+      border-radius: 100px;
+      border-color: $bgColor;
+      &:hover, &:focus {
+        color: white;
+        background-color: $bgColor;
+        border: 1px solid white;
+      }
+    }
+    a {
+      color: white;
+      padding: 6px 10px;
+      &:hover {
+        color: #ffd800;
+      }
+    }
+
+  }
+
+  .grunticon-relate {
+    color: inherit;
+  }
+
+  hr.divider {
+    margin: 12px 10px;
+  }
+
+  .no-auth {
+    a {
+      padding-left: 29px;
+    }
+  }
+
+  .name {
+    font-size: 20px;
+    hr {
+      margin: 12px 20px;
+    }
+  }
+
+  .menu-footer {
+
+    color: #AAA;
+    margin: 30px 10px;
+    font-size: 10px;
+
+    .text-center {
+      margin: 10px 0;
+    }
+
+    .links {
+      margin: 5px 10px;
+    }
+
+    a {
+      color: #AAA;
+      &:not(:last-child) {
+        padding-right: 10%;
+      }
+    }
+
+  }
+
+}

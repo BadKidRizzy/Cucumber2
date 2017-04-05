@@ -1,0 +1,173 @@
+@import '../../../variables';
+
+.navbar {
+  height: $desktopHeaderHeight;
+}
+
+.navbar-default .navbar-nav>li>a:focus:focus {
+  box-shadow: none;
+}
+
+.logo-pathevo {
+  background-image: url(../../../../images/pathevo-logo-white.svg);
+  width: 50px;
+  margin-top: 10px;
+  background-repeat: no-repeat;
+}
+
+.navbar-brand {
+  &:focus {
+    border: 2px solid rgba(255,255,255,.6);
+    border-radius: 50%;
+  }
+}
+
+.dropdown-menu span {
+  font-weight: 300;
+}
+
+@media (max-width: $sm - 1) {
+  .navbar {
+    height: $mobileHeaderHeight;
+  }
+}
+
+.dropdown-menu>li>a:focus {
+  border: none;
+  box-shadow: none;
+  background-color: #006a9e;
+}
+
+
+.dropdown-toggle {
+  padding-bottom: 19px !important;
+  margin-left: -10px;
+}
+
+.icons-link {
+  font-size: 26px;
+  padding: 20px 5px;
+}
+
+.badge {
+  left: -18px;
+}
+
+.name {
+  font-size: 15px;
+  &:before {
+    margin-top: 2px;
+  }
+}
+
+.navbar-nav > li > a {
+  line-height: 35px;
+  font-size: 15px;
+  padding-top: 16px;
+  padding-bottom: 15px;
+  &:focus {
+  }
+}
+
+.main-nav {
+  margin: 0 15px;
+  max-width: 700px;
+}
+
+.navbar-right {
+  margin-left: 20px;
+  margin-top: -2px;
+  margin-right: -16px;
+  li > .btn-white {
+    color: $pathevoBlue;
+    padding: 5px 20px;
+    background-color: white;
+    margin-top: 12px;
+    border-radius: 100px;
+    &:hover, &:focus {
+      color: white;
+      background-color: $pathevoBlue;
+      border: 1px solid white;
+    }
+  }
+  li > .login {
+    margin-top: 2px;
+  }
+  li > a:focus {
+    .grunticon-star {
+      text-shadow: 0 0 4px #0076b0, 0 0 12px white;
+      //font-size: 28px;
+    }
+  }
+}
+
+
+a > .dropdown-toggle {
+  padding-top: 22px;
+  height: 100%;
+}
+
+.dropdown > a:focus {
+  background-color: #0076b0;
+}
+
+.dropdown-menu {
+  width:170px;
+  li {
+    margin: 5px 0;
+    font-size: larger;
+    font-weight: 300;
+    //padding: 3px 20px;
+    .btn-white.upgrade-btn {
+      margin: 10px;
+      padding:9px 20px;
+      text-align: center;
+      font-weight: 300;
+    }
+  }
+  li.text-center > a:hover, li.text-center>a:focus {
+    background-color: transparent;
+  }
+  i {
+    font-size: 22px;
+    margin-right: 10px;
+  }
+}
+
+.icon-chevron-down {
+  margin-left: 15px;
+  font-size: 20px;
+  &:before {
+    top: 1px;
+  }
+}
+
+img {
+  max-height: 25px;
+}
+
+.mobile {
+
+  i {
+    color: white;
+  }
+
+  .icon-menu {
+    font-size: 34px;
+    padding: 6px 8px;
+  }
+  .icon-magnifying-glass {
+    font-size: 28px;
+  }
+  .grunticon-star {
+    font-size: 23px;
+  }
+
+  .pull-right {
+    margin: 3px 10px;
+    i {
+      padding: 12px 9px;
+    }
+  }
+
+}

@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "http://api-dev.pathevo.com",
+    "proxyTimeout": 5000,
+    "secure": false
+  }
+}

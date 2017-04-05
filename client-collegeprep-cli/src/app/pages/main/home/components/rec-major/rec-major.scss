@@ -1,0 +1,28 @@
+@import '../../../../../variables';
+
+.icon-badge {
+  text-align: center;
+  img {
+    height: 60px;
+    width: 60px;
+  }
+}
+
+dl {
+  margin-bottom: 0;
+}
+
+@media (min-width: $sm){
+  .icon-badge {
+    text-align: right;
+  }
+}
+@media (max-width: $sm - 1){
+  dl {
+    text-align: center;
+    margin-top: 15px;
+  }
+  h2 {
+    margin-bottom: 0;
+  }
+}

@@ -1,0 +1,192 @@
+@import '../../../variables';
+
+.onboarding-page {
+  margin-top: 30px;
+  margin-bottom: 60px;
+  min-height: 645px;
+}
+
+small a {
+  color: #ccc;
+  &:hover {
+    color: $pathevoBlue;
+  }
+}
+
+h2 {
+  margin: 50px 5px 0;
+}
+
+hr {
+  margin: 40px 0;
+  width: 100%;
+}
+
+.inactive {
+  opacity: 1;
+  transition: all .2s ease-in;
+  height: auto;
+  visibility: visible;
+}
+
+
+.selected {
+
+  .inactive, .active {
+    opacity: 0;
+    visibility: hidden;
+    animation-name: fadeZoomOut;
+    animation-duration: .5s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-out;
+  }
+
+  @keyframes fadeZoomOut {
+    from {
+      opacity: 1;
+      height: inherit;
+      margin-bottom: inherit;
+    }
+    50% {
+      opacity: 0;
+      transform: scale3d(.5, .5, .5);
+      height: inherit;
+      margin-bottom: inherit;
+    }
+    to {
+      opacity: 0;
+      height: 0;
+      margin-bottom: 0;
+    }
+  }
+
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+
+  li {
+    width: 200px;
+    text-align: center;
+    margin: 0 25px 40px;
+
+    button {
+      color: #777;
+      background: none;
+      border: none;
+      img {
+        display: block;
+        margin: 0 auto;
+        padding-bottom: 15px;
+        transition: all .2s ease;
+      }
+    }
+
+    &:hover img {
+      transform: scale(1.1);
+    }
+
+    &.selected > button {
+      color: #333;
+    }
+
+  }
+}
+
+.confirmation {
+  margin-top: -30px;
+  //margin-bottom: 250px;
+  display: block;
+  text-align: left;
+  animation-name: fadeIn;
+  animation-delay: 0s;
+  animation-timing-function: ease-in;
+  animation-duration: .5s;
+  animation-fill-mode: both;
+}
+
+.panel {
+  margin: 20px 0;
+  width: auto;
+}
+
+.panel-heading {
+  background-color: #0A608A;
+  color: #fff;
+  span {
+    font-size: 20px;
+    margin-top: -3px;
+  }
+}
+.panel-body {
+  background-color: #F8F8F8;
+  padding-bottom: 35px;
+  p {
+    padding: 0 10px;
+  }
+  img {
+    margin: 10px 0 20px;
+  }
+}
+.btn {
+  margin: 10px 0;
+  width: 195px;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 991px) {
+  h2 {
+    font-size: 24px;
+  }
+  ul {
+    li {
+      width: 150px;
+      font-size: smaller;
+      margin: 0 15px 20px;
+      transition: all .18s linear;
+      img {
+        transform: scale(.75);
+        padding-bottom: 0 !important;
+      }
+      &:hover img {
+        transform: scale(.85);
+      }
+    }
+
+  }
+
+}
+
+@media (min-width: $sm){
+  .continue {
+    float: right;
+    a {
+      float: right;
+    }
+  }
+}
+
+@media (max-width: $sm - 1) {
+  h2 {
+    margin-top: 40px;
+  }
+  small {
+    margin-right: 25px;
+  }
+  ul li {
+    margin: 0 5px 20px;
+  }
+}

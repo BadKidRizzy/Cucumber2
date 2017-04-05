@@ -1,0 +1,154 @@
+@import 'variables';
+
+:host {
+  min-height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
+}
+
+/deep/ {
+
+  .pos-relative {
+    position: relative;
+  }
+
+  //TODO refactor into angular specific component repo
+  .has-feedback {
+
+    .feedback {
+      transition: opacity .3s linear, border .3s linear, color .3s linear, height .3s ease-in-out;
+      opacity: 0;
+      height: 0;
+      > .help-block {
+        color: $dangerRed;
+      }
+      &.display {
+        opacity: 1;
+        height: 25px;
+      }
+    }
+
+    .form-control {
+      padding-right: 40px;
+    }
+
+    input[type=number].form-control {
+      &:focus, &:hover {
+        padding-right: 15px;
+      }
+      &:hover + .icon-warning {
+        opacity: 0;
+      }
+    }
+
+    .icon-warning {
+      right: 15px;
+      opacity: 0;
+      transition: opacity .3s linear;
+      color: $dangerRed;
+    }
+
+    .ng-invalid.ng-touched:not(:focus) {
+      border-color: $dangerRed;
+      + .icon-warning {
+        opacity: 1;
+      }
+      + .feedback, + * + .feedback {
+        opacity: 1;
+        height: 25px;
+      }
+    }
+  }
+
+  main {
+    padding-bottom: 80px;
+    min-height: 100%;
+    overflow: hidden;
+  }
+
+  /*any pages with pagination lists*/
+  table.loading, .row.loading {
+    opacity: 0.6;
+    border-bottom: 1px solid;
+  }
+
+  img.error {
+    max-width: 100%;
+  }
+
+  datepicker {
+    .icon-chevron-left, .icon-chevron-right {
+      font-size: 18px;
+    }
+  }
+
+  .calendar {
+
+    .btn-default.active {
+      background-color: inherit;
+    }
+
+    datepicker table {
+      margin: 0 auto;
+    }
+
+    thead .btn.disabled {
+      background-color: inherit;
+    }
+
+    thead .btn:not(.disabled) {
+      padding: 6px 8px;
+      margin: 10px;
+    }
+
+    button {
+      border: none;
+      background-color: transparent;
+      border-radius: 50%;
+      &.active {
+        border: 1px solid $pathevoBlue;
+      }
+    }
+
+    .btn:focus:focus {
+      box-shadow: none;
+      -webkit-box-shadow: none;
+    }
+
+    .text-info {
+      color: $pathevoBlue;
+      font-weight: bold;
+    }
+
+    .btn-sm span {
+      &:not(.text-muted) {
+        color: #333;
+      }
+    }
+
+    .well {
+      display: block;
+      margin-right: auto;
+      margin-left: auto;
+      background-color: inherit;
+      border: none;
+      &:focus, &:active {
+        outline: none;
+      }
+    }
+
+    table, .well, .calendar, daypicker {
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  @media (max-width: $xs + 1){
+    .popover-responsive {
+      width: 100px;
+    }
+  }
+
+}

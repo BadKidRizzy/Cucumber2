@@ -1,0 +1,305 @@
+@import '../../../../variables';
+
+.icon-calendar:before {
+  margin-top: -2px;
+}
+.icon-warning:before{
+  margin-top: -4px;
+}
+.cal-btn {
+  margin: 7px 0 20px 20px;
+}
+
+.edit-col {
+  & > button {
+    margin-top: 10px;
+  }
+}
+.task-title {
+  input {
+    font-size: 18px;
+  }
+}
+
+.icon-bell {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.pl-bell {
+  padding-left: 50px;
+}
+
+.alt-label {
+  position: relative;
+  top: 3px;
+}
+
+.days-prior {
+  font-size: 18px;
+  position: relative;
+  top: 2px;
+  margin: 0 10px;
+}
+
+.prior-text {
+  display: inline-table;
+  margin-left: 10px;
+}
+
+.day-operators {
+  display: inline-table;
+  position: relative;
+  top: 4px;
+}
+
+.icon-plus, .icon-minus {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 50%;
+  padding: 7px 9px;
+  &.disabled {
+    color: #777777;
+    cursor: not-allowed !important;
+  }
+}
+
+hr.text-info {
+  border-top: 3px solid #ff9637;
+}
+
+.remind-method {
+  & > div {
+    padding-left: 0;
+  }
+  .icon-warning.text-info {
+    font-size: 20px;
+    margin-left: 10px;
+    top: 4px;
+    line-height: 0;
+  }
+}
+
+.phone-form {
+  display: inline-block;
+}
+
+.no-phone-number {
+  input {
+    padding-right: 35px;
+  }
+  .form-group {
+    position: relative;
+    margin-top: 10px;
+  }
+  &.slides.display {
+    height: 140px;
+    &.invalid-phone {
+      height: 150px;
+    }
+  }
+  & > button {
+    margin: 12px 0 0 10px;
+    vertical-align: top;
+  }
+}
+
+#phone {
+  width: 205px;
+}
+
+.due-date {
+  margin-top: 5px;
+  span {
+    font-size: x-large;
+  }
+  .icon-trash {
+    vertical-align: sub;
+  }
+}
+.cal-hr {
+  max-width: 365px;
+  &.invalid {
+    margin-top: -15px
+  }
+}
+
+.bad-due-date {
+  font-size: large;
+  hr {
+    max-width: 365px;
+    border-width: 3px;
+    border-color: #ff9637;
+    margin-top: 0px;
+  }
+  &.slides.display {
+    height: 70px;
+  }
+}
+
+.calendar .icon-warning.text-info {
+  color: #ff9637;
+}
+
+:host /deep/ .calendar {
+
+  &.show-prior-reminder .reminder span {
+    border-color: $pathevoBlue;
+    font-weight: bold;
+  }
+
+  // month name
+  thead {
+    .btn.disabled > strong {
+      font-weight: 300;
+      font-size: 16px;
+      color: #333;
+    }
+  }
+
+  &.show-due-reminder tbody .btn-info span {
+    border: 1px solid $pathevoBlue;
+  }
+
+  tbody {
+
+    .btn {
+
+      padding: 9px 11px;
+      span {
+        padding: 6px 7px;
+        border-radius: 50%;
+        border: 1px solid transparent;
+      }
+
+      &:hover {
+        & span {
+          background-color: $pathevoBlue;
+          color: #fff !important;
+        }
+
+        background-color: transparent;
+        &.active, &.btn-info {
+          background-color: $pathevoBlue;
+        }
+      }
+    }
+
+    .btn-info {
+      background-color: #17d557;
+      & > span {
+        color: white !important;
+      }
+    }
+
+    .btn.active, .btn-info {
+      min-width: 0 !important;
+      padding: 0 !important;
+      border: 0;
+      width: 32px;
+      height: 31px;
+
+      &:hover {
+        color: transparent;
+      }
+    }
+  }
+
+  @media (min-width: $md) and (max-width: $lg - 1 ) {
+    tbody .btn {
+      padding: 9px 6px;
+    }
+  }
+
+  @media (max-width: 399px ){
+    .btn.pull-right {
+      margin-left: -10px;
+    }
+    .btn.pull-left {
+      margin-right: -10px;
+    }
+    tbody .btn {
+      padding: 9px 6px;
+    }
+  }
+
+}
+
+@media (min-width: $sm ){
+  .remind-method {
+    & > div {
+      &:first-child {
+        width: 80px;
+        border-right: 1px solid #CCC;
+      }
+      &:last-child {
+        padding-left: 25px;
+        width: calc(100% - 110px);
+        max-width: 405px;
+      }
+    }
+  }
+}
+
+@media (max-width: $sm - 1 ){
+
+  .cal-hr.invalid:not(.text-info) {
+    display: none;
+  }
+
+  hr.mt0 {
+    margin-top: 5px;
+  }
+  .edit-col {
+    & > button {
+      margin-top: 16px;
+    }
+  }
+  .prior-text {
+    margin-top: 20px;
+    display: block;
+  }
+  .remind-method > div:last-child {
+    margin-top: 20px;
+  }
+
+  .calendar {
+    transition: height .3s ease-in-out;
+    border-top: 1px solid #ccc;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    margin-left: -15px;
+    margin-right: -15px;
+    background-color: #fafafa;
+  }
+
+  .show-cal {
+    height: 310px;
+    &.invalid-date {
+      height: 395px;
+    }
+  }
+  .hide-cal {
+    opacity: 0;
+    height: 0;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 430px) {
+  .phone-form {
+    display: block;
+    width: 205px;
+  }
+  .no-phone-number {
+    & > button {
+      margin: 0;
+    }
+    &.slides.display {
+      height: 170px;
+      &.invalid-phone {
+        height: 205px;
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+<pathevo-header
+    [user]="user"
+    [showNavigation]="showHeaderNav"
+    [showUpgrade]="showUpgrade"
+    [features]="features"
+    (logout)="logout()">
+</pathevo-header>
+
+<menu-sidebar
+    [user]="user"
+    [showUpgrade]="showUpgrade"
+    [features]="features"
+    (toggled)="sidebarToggled($event)"
+    (logout)="logout()">
+</menu-sidebar>
+
+<favorites-sidebar
+    *ngIf="user"
+    (toggled)="sidebarToggled($event)">
+</favorites-sidebar>
+
+<main>
+  <div class="darken-overlay" [class.display]="darkenMainDiv"
+       (click)="sidebarService.eventBus.next({}); darkenMainDiv = false;">
+  </div>
+  <router-outlet></router-outlet>
+</main>
+
+<pathevo-footer
+    dataSourcesRoute="/data-sources"
+    termsPrivacyRoute="/documents"
+    termsPrivacyTab="terms"
+    helpLink="https://pathevo.zendesk.com/hc/en-us/community/topics"
+    contactLink="https://pathevo.zendesk.com/hc/en-us/requests/new">
+</pathevo-footer>

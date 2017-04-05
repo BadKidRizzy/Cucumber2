@@ -1,0 +1,3 @@
+date
+cucumber screen=off -f html -o  report_test_suite_without_screenShot.html
+date

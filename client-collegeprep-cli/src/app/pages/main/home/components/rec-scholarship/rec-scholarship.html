@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-3 col-md-4 logo text-center">
+    <img src="/images/default-content/scholarships-line.svg"
+         onerror="this.onerror=null;"
+         alt="scholarship logo" class="img-thumbnail">
+  </div>
+  <div class="col-xs-12 col-sm-9 col-md-8 text-center-xs">
+    <h2 class="text-primary"><a routerLink="/detail/scholarships/{{scholarship.id}}">{{scholarship.SCHOLARSHIP_NAME}}</a></h2>
+    <div class="text-muted">{{scholarship.SPONSOR_DETAILS?.name}}</div>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <dl class="col-xs-6 col-sm-3" *ngIf="scholarship['AWARD_AMOUNT']">
+    <dt class='stat-bold'>{{(scholarship['AWARD_AMOUNT'] | currency:'USD':true:'1.0-0') + scholarship['AWARD_AMOUNT_SUFFIX']}}</dt>
+    <dd>Amount</dd>
+  </dl>
+  <dl class="col-xs-6 col-sm-3" *ngIf="scholarship['DEADLINE_DETAILS']">
+    <dt class='stat-bold'>{{scholarship['DEADLINE_DETAILS']}}</dt>
+    <dd>Deadline</dd>
+  </dl>
+  <dl class="col-xs-6 col-sm-3" *ngIf="scholarship['NUMBER_OF_AWARDS']">
+    <dt class='stat-bold'>{{scholarship['NUMBER_OF_AWARDS']}}</dt>
+    <dd>Number of Awards</dd>
+  </dl>
+  <dl class="col-xs-6 col-sm-3" *ngIf="scholarship['GPA']">
+    <dt class='stat-bold'>{{scholarship['GPA']}}</dt>
+    <dd>{{scholarship['GPA_LABEL']}}</dd>
+  </dl>
+</div>

@@ -1,0 +1,162 @@
+
+<div class="container pos-relative" [class.peek]="accessLevel < FULL_ACCESS">
+
+  <div class="row">
+
+    <div class="col-xs-6 col-sm-4 col-md-3">
+      <h1 class="text-primary">Tasks</h1>
+    </div>
+
+    <div class="hidden-xs col-sm-4 nav-col">
+      <div> <!-- needed for styling-->
+        <strong>Status</strong>: <a [class.text-primary]="showActive" routerLink="/tasks" [queryParams]="{status: ACTIVE}">Active</a>
+        <span> | </span>
+        <a [class.text-primary]="!showActive" routerLink="/tasks" [queryParams]="{status: COMPLETED}">Complete</a>
+      </div>
+    </div>
+
+    <div class="col-xs-6 col-sm-4 col-md-5 text-right create-col">
+      <button class="btn btn-primary btn-sm" routerLink="/tasks/new"><i class="icon-plus"></i> Create task</button>
+    </div>
+  </div>
+
+  <div class="row visible-xs">
+    <div class="col-xs-12">
+      <ul class="nav nav-tabs">
+        <li class="nav-item text-center" routerLink="." [queryParams]="{status: ACTIVE}" [class.active]="showActive">
+          <a class="nav-link"><strong>Active</strong></a>
+        </li>
+        <li class="nav-item text-center" routerLink="." [queryParams]="{status: COMPLETED}" [class.active]="!showActive">
+          <a class="nav-link"><strong>Complete</strong></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="mt0">
+
+  <div class="row">
+
+    <div class="hidden-xs col-md-5 cal-wrapper">
+      <div class="calendar list">
+        <datepicker
+            [customClass]="markedDates"
+            [showWeeks]="false"
+            [maxMode]="'day'"
+            [(ngModel)]="today">
+        </datepicker>
+        <hr>
+      </div>
+    </div>
+
+    <div class="col-md-7">
+
+      <div class="row title hidden-xs">
+        <div class="col-sm-8">Title</div>
+        <div class="col-sm-4 right-col">
+          <div>Due Date</div>
+          <div class="pull-right">Reminder</div>
+        </div>
+      </div>
+
+      <div *ngIf="!tasks" class="mt15">Loading...</div>
+
+      <div *ngFor="let t of tasks | paginate: {itemsPerPage: 10, currentPage: page, totalItems: totalCount, maxSize: 7 }; let i = index"
+           class="task row"
+           [class.ptb15]="!showActive"
+           [class.loading]="!queryDebounce?.closed"
+           [class.is-removing]="t.isRemoving">
+
+        <div class="col-xs-12 col-sm-8">
+
+          <div class="status text-center">
+            <div *ngIf="showActive">
+              <div class="checkbox checkbox-success" [class.hidden]="t.showUndo">
+                <input type="checkbox" id="checkbox-{{i}}"
+                       [(ngModel)]="t.isComplete"
+                       (ngModelChange)="updateTaskStatus(t)">
+                <label attr.for="checkbox-{{i}}"></label>
+              </div>
+              <button class="btn undo" [class.hidden]="!t.showUndo" (click)="undoTaskStatus(t)">
+                <span class="count-down" [class.start]="t.startCountdown"></span>
+                <span class="text">undo</span>
+                <span></span>
+              </button>
+            </div>
+            <i *ngIf="!showActive" class="icon-check text-success"></i>
+          </div>
+
+          <div class="task-title" [class.show-undo]="t.showUndo">
+            <a routerLink="/tasks/{{t.taskId}}" [class.hidden]="t.showUndo">
+              <div>{{t.title}}</div>
+              <div class="pull-right visible-xs"><i class="icon-edit pull-right"></i></div>
+            </a>
+            <span class="text-primary" [class.hidden]="!t.showUndo">Task complete!</span>
+          </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-4 right-col"
+             [ngClass]="showActive ? (t.showUndo ? 'ml-undo' : 'ml-box') : 'hidden-xs' ">
+
+          <div class="due-date" [class.mt0]="!showActive"
+               [ngClass]="t.taskStatus == 'OverDue' ? 'text-danger overdue' : 'ml0'">
+            {{t.dueDate | date:'MMM d'}}
+          </div>
+
+          <div [class.hidden]="!t.hasReminders" class="icon-bell text-muted"></div>
+        </div>
+
+      </div>
+
+      <div *ngIf="tasks?.length == 0">
+        <div class="row text-center task-prompt">
+
+          <div class="col-xs-12" *ngIf="showActive && !hasCompletedTasks">
+            <p>SATs! College visits! Advisor meetings! Keep yourself on track by simply making a task and setting a
+              reminder.</p>
+            <br>
+            <p>Click the button in the top right or that big ol' button below to get started.</p>
+            <br/>
+
+            <button class="btn btn-primary" routerLink="/tasks/new">
+              <i class="icon-plus"></i> Create your first task
+            </button>
+
+          </div>
+
+          <div class="col-xs-12" *ngIf="showActive && hasCompletedTasks">
+            <h2 class="text-primary">Hooray! All done!!!</h2><br>
+            <p>for now...</p><br>
+            <button class="btn btn-default btn-large" routerLink="/tasks/new">
+              <i class="icon-plus"></i> Create another task
+            </button>
+          </div>
+
+          <div class="col-xs-12" *ngIf="!showActive">
+            <p>You have no completed tasks</p>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row mt15" [class.hidden]="tasks?.length == 0">
+        <div class="col-xs-12">
+          <pagination-control (pageChange)="changePage($event)" *ngIf="totalCount > 10" [maxSize]="9"></pagination-control>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <peek-overlay
+      *ngIf="accessLevel < FULL_ACCESS"
+      rerouteTo="/tasks"
+      (onSignedUp)="updateView($event)"
+      [accessLevel]="accessLevel"
+      [promoMessage]="featureDescription+'<br>Upgrade now to access this feature.'"
+      [loginMessage]="featureDescription+'<br>Sign up to use this feature.'">
+  </peek-overlay>
+
+</div>

@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-3 logo text-center">
+    <img src="{{contentImageHost}}/us_majors/icons/{{major.id}}.png" alt="major logo"
+         onerror="this.onerror=null;this.src='/images/default-content/majors-line.svg';">
+  </div>
+  <div class="col-xs-12 col-sm-9 text-center-xs">
+    <h2 class="text-primary"><a routerLink="/detail/majors/{{major.id}}">{{major.Name}}</a></h2>
+    <p class="text-muted hidden-xs">There are {{major.occupationCount | number:'1.0-0'}} occupations related to this major.</p>
+    <p class="hidden-xs"><a routerLink="/detail/majors/{{major.id}}">Learn more</a></p>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="col-xs-6">
+    <div class="row" *ngIf="major.areaOfStudy">
+      <div class="col-xs-12 col-sm-4 icon-badge">
+        <img src="/images/areas-of-study/{{major.areaOfStudy?.icon}}" alt="Area of Study icon">
+      </div>
+      <dl class="col-xs-12 col-sm-8">
+        <dt>Area of Study</dt>
+        <dd>{{major['Area of Study']}}</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="col-xs-6">
+    <div class="row" *ngIf="major.stemArea">
+      <div class="col-xs-12 col-sm-4 icon-badge">
+        <img src="/images/stem-areas/{{major.stemArea?.icon}}" alt="STEM Area icon">
+      </div>
+      <dl class="col-xs-12 col-sm-8" [class.hidden]="!major.stemArea">
+        <dt class="stat-bold">STEM Area</dt>
+        <dd>{{major['STEM Area']}}</dd>
+      </dl>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="20px" height="18px" viewBox="0 0 20 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>ccw copy-white</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Utility-Entypo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-224.000000, -372.000000)" fill="#FFFFFF">
+            <g id="ccw-copy" transform="translate(224.000000, 372.000000)">
+                <g id="CCW">
+                    <path d="M0.685,9 L3.057,9 L3.057,8.795 C3.165,4.361 6.781,0.799 11.226,0.799 C15.741,0.799 19.4,4.471 19.4,9 C19.4,13.529 15.741,17.199 11.226,17.199 C9.328,17.199 7.581,16.549 6.193,15.461 L7.599,13.957 C8.615,14.705 9.869,15.15 11.226,15.15 C14.612,15.15 17.357,12.396 17.357,9 C17.357,5.604 14.612,2.85 11.226,2.85 C7.909,2.85 5.208,5.493 5.101,8.795 L5.101,9 L7.773,9 L4.279,12.894 L0.685,9 L0.685,9 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

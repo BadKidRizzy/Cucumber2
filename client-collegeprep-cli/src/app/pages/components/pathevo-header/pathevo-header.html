@@ -1,0 +1,68 @@
+<header class="navbar navbar-default">
+
+  <nav class="visible-xs-inline mobile">
+    <a href="javascript:void('open menu');" (click)="toggleMenu()" class="d-inline">
+      <i class="icon-menu"></i>
+    </a>
+    <div class="pull-right">
+      <a routerLink="/search" (click)="closeAllSidebar()"><i class="icon-magnifying-glass"></i></a>
+      <a href="javascript:void('toggle favorites')" (click)="toggleFavs()"><i class="grunticon-star" [class.hidden]="!user"></i></a>
+      <span>&nbsp;</span>
+    </div>
+  </nav>
+
+  <nav class="container hidden-xs">
+
+    <div class="navbar-header"><a class="navbar-brand logo-pathevo mt10" routerLink="/home"></a></div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <ul *ngIf="user" class="nav navbar-nav navbar-right">
+      <li><a href="javascript:void('toggle favorites')" (click)="toggleFavs()"><i class="grunticon-star icons-link"></i></a></li>
+      <li class="dropdown" dropdown [keyboardNav]="true">
+        <a href="javascript:void('toggle dropdown')" class="dropdown-toggle" dropdownToggle>
+          <span class="name">{{user?.first_name}}</span><i class="icon-chevron-down"></i>
+        </a>
+        <ul class="dropdown-menu" dropdownMenu>
+          <li><a routerLink="/profile/about-me"><i class="grunticon-profile"></i><span> Profile</span></a></li>
+          <li><a routerLink="/profile/settings"><i class="icon-cog"></i><span> Settings</span></a></li>
+          <li><a href="javascript:void('logout')" (click)="logout.emit()"><i class="icon-log-out"></i><span> Logout</span></a></li>
+          <li class="text-center" *ngIf="showUpgrade">
+            <a href="javascript:void('upgrade')"
+               routerLink="/profile/payment"
+               class="btn btn-white btn-small btn-default upgrade-btn"><!--<i class="icon-rocket"></i>-->
+              Upgrade to Pro</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <ul *ngIf="!user" class="nav navbar-nav navbar-right">
+      <li><a routerLink="/auth/login" class="login">Log in</a></li>
+      <li><a routerLink="/auth/sign-up" class="btn-white btn btn-default btn-sm">Sign up</a></li>
+    </ul>
+
+    <ul class="nav navbar-nav main-nav" *ngIf="showNavigation && features">
+      <li routerLinkActive="active"><a routerLink="/home">Home</a></li>
+      <li routerLinkActive="active" [class.hidden]="features.search == HIDE"><a routerLink="/search">Search</a></li>
+      <li routerLinkActive="active" [class.hidden]="features.assessment_ip1 == HIDE"
+          class="need-login"
+          [popover]="loginAssess"
+          [attr.disabled]="!user"
+          [popoverDisabled]="user"
+          [popoverOnHover]="true"
+          [popoverCloseOnMouseOutside]="true"
+          popoverPlacement="bottom">
+        <a routerLink="/assess">Discover</a>
+      </li>
+      <li routerLinkActive="active" [class.hidden]="features.relate == HIDE"><a routerLink="/relate">Relate</a></li>
+      <li routerLinkActive="active" [class.hidden]="features.tasks == HIDE"><a routerLink="/tasks">Tasks</a></li>
+      <li routerLinkActive="active" [class.hidden]="features.advisor_q_a == HIDE"><a routerLink="/advisor" >Advisor</a></li>
+
+      <popover-content #loginAssess [animation]="true" [closeOnMouseOutside]="true" [closeOnClickOutside]="true">
+        <login-popover *ngIf="!user" [rerouteTo]="'/assess'"></login-popover>
+      </popover-content>
+    </ul>
+
+  </nav>
+
+</header>

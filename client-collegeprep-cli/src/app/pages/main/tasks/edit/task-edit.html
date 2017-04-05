@@ -1,0 +1,212 @@
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-xs-6">
+      <h1 class="text-primary">{{isNew ? 'Create' : 'Edit'}} Task</h1>
+    </div>
+
+    <div class="col-xs-6 mt5">
+      <div class="text-right edit-col">
+        <button *ngIf="!isNew" class="btn btn-success btn-sm" (click)="toggleCompleteTask()">
+          <span class="icon" [ngClass]="isComplete ? 'icon-check' : 'icon-circle'"></span>
+          Complete Task
+        </button>
+        <feedback-button
+            *ngIf="isNew"
+            [disabled]="!title || !dueDate || invalidDueDate || showPhonePrompt || disableSave || isSaving"
+            [state]="saveBtnState"
+            btnClasses="btn-sm"
+            (onClick)="save()">
+        </feedback-button>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="mt0"/>
+
+  <div class="row">
+    <div class="col-md-5">
+
+      <div class="visible-xs">
+        <h3><i class="icon-calendar"></i> Due Date</h3>
+        <button class="btn btn-sm cal-btn" [ngClass]="dueDate ? 'btn-success-invert' : 'btn-default'"
+          (click)="showMobileCal = !showMobileCal;">
+          {{dueDate ? (dueDate | date:'MMMM d') : 'Select due date'}} <i [ngClass]="showMobileCal ? 'icon-chevron-up' : 'icon-chevron-down'"></i>
+        </button>
+      </div>
+
+      <div class="calendar edit"
+           [ngClass]="showMobileCal? 'show-cal' : 'hide-cal'"
+           [class.invalid-date]="invalidDueDate"
+           [class.show-prior-reminder]="remindOnPriorDate"
+           [class.show-due-reminder]="remindOnDueDate">
+
+        <div class="text-center">
+          <div class="hidden-xs">
+            <h3>Due date</h3>
+            <div class="due-date">
+              <div *ngIf="dueDate" class="fades" [class.display]="dueDate">
+                <!--<span class="text-danger icon-cross clickable" (click)="clearDueDate(); checkDisableSave()"></span>-->
+                <span>{{dueDate | date:'MMMM d' }}</span>
+              </div>
+              <div *ngIf="!dueDate">
+                <span class="text-primary">Click date to set</span>
+              </div>
+            </div>
+            <hr class="cal-hr mb0">
+          </div>
+          <datepicker [(ngModel)]="dueDate" [showWeeks]="false" (ngModelChange)="handleDueDate(); checkDisableSave()" [maxMode]="'day'"
+                      [customClass]="reminderMoment ? [{date: reminderMoment, mode:'day', clazz:'reminder'}] : []">
+          </datepicker>
+        </div>
+
+        <hr class="cal-hr invalid" [class.text-info]="invalidDueDate">
+        <div class="text-center bad-due-date fades slides" [class.display]="invalidDueDate">
+          <i class="icon-warning text-info"></i> A Due Date cannot be before <br> the current date.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-7">
+
+      <div class="form-group has-feedback task-title">
+        <label class="sr-only">Title</label>
+        <input type="text" name="title" class="form-control"
+               maxlength="120"
+               placeholder="Title"
+               autocomplete="off"
+               [(ngModel)]="title"
+               (ngModelChange)="checkDisableSave()"
+               required>
+        <span class="icon-warning form-control-feedback" style="right:0"></span>
+        <div class="feedback"><span class="help-block">Task must have a title</span></div>
+      </div>
+
+      <div class="form-group">
+        <label class="sr-only">Title</label>
+        <textarea class="form-control"
+                  [(ngModel)]="descript"
+                  (ngModelChange)="checkDisableSave()"
+                  rows="7"
+                  placeholder="Description (optional)"
+                  name="descript">
+        </textarea>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <h3>
+            <i class="icon-bell" [ngClass]="dueDate ? 'text-primary' : 'text-muted'"></i>
+            Remind me <span class="text-muted"> (optional)</span>
+          </h3>
+        </div>
+      </div>
+
+      <div class="row mt10 pl-bell" [class.hidden]="dueDate">
+        <div class="col-xs-12">
+          Select a <strong>Due Date</strong> to activate reminders
+        </div>
+      </div>
+
+      <div class="fades pl-bell" [class.display]="dueDate">
+
+        <div class="row">
+          <div class="col-xs-12 checkbox checkbox-success">
+            <input id="on-due-date" type="checkbox" name="on-due-date"
+                   [(ngModel)]="remindOnDueDate"
+                   (ngModelChange)="checkDisableSave()">
+            <label for="on-due-date"></label>
+            <span class="alt-label">on the Due Date</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 checkbox checkbox-success">
+            <input id="before-due" type="checkbox" name="before-due"
+                   [(ngModel)]="remindOnPriorDate"
+                   (ngModelChange)="checkDisableSave()">
+            <label for="before-due"></label>
+            <div class="day-operators">
+              <i class="icon-minus text-primary clickable" (click)="updateDaysPrior(-1)" [class.disabled]="daysPrior <= 1"></i>
+              <strong class="days-prior">{{daysPrior}}</strong>
+              <i class="icon-plus text-primary clickable" (click)="updateDaysPrior(1)"></i>
+            </div>
+            <div class="alt-label prior-text"> day{{daysPrior > 1 ? 's': ''}} before {{dueDate | date:'MMMM d'}} (<strong>on {{reminderMoment?.format('MMMM D')}}</strong>)</div>
+          </div>
+        </div>
+
+        <hr style="margin-left: -15px;">
+
+        <div class="row remind-method">
+
+          <div class="col-sm-3">
+            <div class="hidden-xs">by <strong>Email</strong></div>
+            <div class="checkbox checkbox-success">
+              <input id="by-email" type="checkbox" name="by-email"
+                     [(ngModel)]="remindByEmail"
+                     (ngModelChange)="handleRemindByEmail(); checkDisableSave()">
+              <label for="by-email"><span class="visible-xs">by <strong>Email</strong></span></label>
+            </div>
+          </div>
+
+          <div class="col-sm-8">
+            <div class="hidden-xs">by <strong>Text</strong> <i class="icon-warning text-info fades" [class.display]="showPhonePrompt"></i></div>
+            <div class="checkbox checkbox-success">
+              <input id="by-text" type="checkbox" name="by-text"
+                     [(ngModel)]="remindByText"
+                     (ngModelChange)="handleRemindByText(); checkDisableSave()">
+              <label for="by-text">
+                <span class="visible-xs">
+                  by <strong>Text</strong> <i class="icon-warning text-info fades" [class.display]="showPhonePrompt"></i>
+                </span>
+              </label>
+            </div>
+
+            <div class="no-phone-number fades slides" [class.display]="showPhonePrompt" [class.invalid-phone]="invalidPhone">
+              <hr class="text-info">
+              <p>We don't know your phone number!<br>Add one now to enable text notifications.</p>
+              <div class="phone-form">
+                <div class="form-group has-feedback">
+                  <label class="sr-only" for="phone">Add Phone Number</label>
+                  <input class="form-control" id="phone" type="tel" placeholder="(555) 123 4567" maxlength="14"
+                         name="phone" ngModel
+                         [class.ng-invalid]="invalidPhone"
+                         [value]="formatPhone(phone)"
+                         (keydown)="enforceNumber($event)"
+                         (keyup)="updatePhone($event, 'phone'); checkPhone(phone); checkDisableSaveNumber()"
+                         (blur)="validatePhone(phone)">
+                  <span class="icon-warning form-control-feedback" style="right: 5px"></span>
+                  <div class="feedback">
+                    <span class="help-block text-nowrap">This is not a valid phone number</span>
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-default" [disabled]="disableSavePhone" (click)="savePhone()">Save number</button>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <hr class="mt15">
+
+      <save-cancel-del-row
+          [isSaveDisabled]="!title || !dueDate || invalidDueDate || showPhonePrompt || disableSave || isSaving"
+          [saveButtonState]="saveBtnState"
+          (save)="save()"
+          (cancel)="location.back()"
+          (delete)="delete()"
+          itemName="task">
+      </save-cancel-del-row>
+
+    </div>
+
+  </div>
+
+</div>

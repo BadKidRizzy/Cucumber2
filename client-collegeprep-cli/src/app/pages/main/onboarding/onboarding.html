@@ -1,0 +1,57 @@
+<div class="container onboarding-page">
+
+  <div>
+    <small class="pull-right"><a routerLink="/home">Skip introduction &#8594;</a></small>
+  </div>
+
+  <h2 class="text-center text-muted">Which field do you find most interesting?</h2>
+
+  <hr>
+
+  <div class="text-center" [class.selected]="selectedCluster">
+
+    <ul>
+      <li *ngFor="let c of careerClusters" [ngClass]="selectedCluster == c ? 'active' : 'inactive'">
+        <button (click)="selectCluster(c);">
+          <img src="/images/career-clusters/{{c.icon.split(' ').join('-')}}" alt="career cluster icon">
+          {{c.Name}}
+        </button>
+      </li>
+    </ul>
+
+    <div class="row">
+      <div class="confirmation col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8"
+           [class.hidden]="!recs">
+
+        <div class="panel panel-default">
+
+          <div class="panel-heading">
+            <span class="icon icon-check pull-left"></span>
+            <h4 class="modal-title"> Great choice!</h4>
+          </div>
+          <div class="panel-body">
+            <div class="text-center">
+              <img src="/images/career-clusters/{{selectedIcon.split(' ').join('-')}}" alt="career cluster icon">
+            </div>
+            <p class="text-center"><strong>{{selectedCluster}}</strong> includes careers like
+              {{recs?.occupations[0].Name}}, and {{recs?.occupations[1]?.Name}}.</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6 text-center-xs">
+            <a class="btn btn-primary" (click)="goToRelatePage()">
+              How to get there <i class="icon-chevron-right"></i>
+            </a>
+          </div>
+          <div class="col-sm-6 text-right text-center-xs">
+            <button class="btn btn-danger-invert" (click)="selectCluster(null)">Choose another <i class="icon-ccw"></i></button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

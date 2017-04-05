@@ -1,0 +1,278 @@
+@import '../../../../variables';
+
+.peek {
+  min-height: 700px;
+}
+
+input[type="checkbox"] {
+  width: 24px;
+  height: 25px;
+  margin-top: 1px;
+}
+
+.nav-col {
+  & > div {
+    margin-top: 26px;
+  }
+  a.text-primary {
+    font-weight: 400;
+  }
+  a:not(.text-primary){
+    color: black;
+  }
+}
+.create-col {
+  button {
+    margin-top: 10px;
+  }
+}
+
+.title {
+  border-bottom-style: solid;
+  border-bottom-color: #DDD;
+  padding-bottom: 10px;
+  margin: 0 0 10px;
+  font-weight: 400;
+  & > div:first-child {
+    padding-left: 50px;
+  }
+}
+
+.task {
+
+  background-color: #f7f7f7;;
+  margin: 10px 0;
+  padding: 10px 0;
+  border: 1px solid lightgray;
+  transition: all .3s ease-in-out;
+
+  &.is-removing {
+    padding: 0;
+    height: 0;
+    border: 0;
+    opacity: 0;
+    margin: 0;
+    & + div {
+      margin-top: 0;
+    }
+  }
+
+  .icon-bell {
+    font-size: large;
+    vertical-align: middle;
+    margin-right: 20px;
+    float: right;
+  }
+
+  .checkbox {
+    margin: -2px 0 0 0;
+  }
+
+  .due-date {
+    width: 65px;
+    border-radius: 05px;
+    border-width: 2px;
+    text-align: center;
+    &.overdue {
+      border-style: solid;
+    }
+  }
+}
+
+.task-prompt {
+  margin-top: 20px;
+}
+
+.card-header {
+  width: 80.3%;
+}
+
+.undo.btn {
+  background-color: $pathevoBlue;
+  position: relative;
+  height: 20px;
+  width: 45px;
+  border-width: 0;
+  overflow: hidden;
+
+  span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+  .count-down {
+    background-color: #0A608A;
+    width: 0;
+    transition: width 3s linear;
+    &.start {
+      width: 100%;
+    }
+  }
+  .text {
+    width: 100%;
+    color: white;
+    background-color: transparent;
+  }
+}
+
+.right-col {
+  & > div {
+    display: inline-block;
+    &:first-child {
+      width: 65px;
+    }
+    &:last-child {
+
+    }
+  }
+}
+
+.status {
+  min-width: 30px;
+  vertical-align: top;
+}
+
+.status, .task-title {
+  display: inline-block;
+}
+
+.task-title {
+  vertical-align: middle;
+  width: calc(100% - 35px);
+  &.show-undo {
+    width: calc(100% - 55px);
+  }
+  span {
+    margin-left: 5px;
+  }
+}
+
+//specific to task list
+:host /deep/ .calendar {
+  thead strong {
+    color: #333;
+  }
+
+  b, strong {
+    font-weight: 400;
+  }
+
+  button {
+    &:not(.pull-right):not(.pull-left) {
+      pointer-events: none;
+    }
+    &.active {
+      border: none;
+      background-color: inherit;
+    }
+  }
+
+  .overdue span, .upcoming span {
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 50%;
+    padding: 3px 4px;
+    margin: 0 -6px;
+  }
+
+  .upcoming span {
+    &:not(.text-info) {
+      color: #17d557 !important;
+    }
+    border-color: #17d557;
+  }
+  .overdue span {
+    color: $dangerRed !important;
+    border-color: $dangerRed;
+  }
+
+  @media (min-width: $md) and (max-width: $lg - 1 ) {
+    button {
+      padding: 8px 14px;
+    }
+  }
+
+}
+
+
+@media ( min-width: $sm ){
+  .due-date {
+    margin-top: 2px;
+    &.overdue {
+      margin: 0;
+      border-style: solid;
+    }
+  }
+}
+
+
+@media ( min-width: $md ){
+  .nav-col {
+    text-align: right;
+  }
+  .cal-wrapper {
+    float: right;
+  }
+}
+
+@media ( max-width: $md - 1 ){
+  .nav-col {
+    text-align: center;
+  }
+}
+
+@media ( max-width: $sm - 1 ){
+  hr.mt0 {
+    margin: 0;
+  }
+  .task {
+    background-color: inherit;
+    margin: 0 -15px;
+    border-width: 0 0 1px 0;
+    &.ptb15 {
+      padding: 15px 0;
+    }
+  }
+  .ml-undo {
+    margin-left: 54px;
+  }
+  .ml-box {
+    margin-left: 34px;
+  }
+  .due-date {
+    margin-top: 10px;
+    &.mt0 {
+      margin-top: 0;
+    }
+  }
+  .task .due-date.ml0 {
+    text-align: left;
+  }
+  .text-right > .due-date {
+    text-align: inherit !important;
+    width: auto;
+    visibility: hidden;
+  }
+  .task {
+    .icon-bell {
+      float: none;
+      margin: -3px 0 0;
+    }
+  }
+  .create-col {
+    button {
+      margin-top: 16px;
+    }
+  }
+  .task-title > a {
+    & > div {
+      display: inline-block;
+      &:first-child {
+        width: calc(100% - 30px);
+      }
+    }
+  }
+
+}

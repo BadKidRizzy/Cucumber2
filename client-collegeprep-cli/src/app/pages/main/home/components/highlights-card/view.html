@@ -1,0 +1,22 @@
+<div class="well">
+
+  <h1 class="mt0">Highlights</h1>
+  <hr>
+  <div [class.hidden]="highlights">
+    Loading...
+  </div>
+
+  <div *ngFor="let h of highlights; let isLast = last">
+    <h2>{{h.title}}</h2>
+    <div class="row">
+      <div class="col-xs-12">
+        <p>{{h.body}}</p>
+        <div class="text-right">
+          <a style="cursor: not-allowed; color: #777">Read more <i class="icon-chevron-right"></i></a>
+        </div>
+      </div>
+    </div>
+    <hr [class.hidden]="isLast">
+  </div>
+
+</div>

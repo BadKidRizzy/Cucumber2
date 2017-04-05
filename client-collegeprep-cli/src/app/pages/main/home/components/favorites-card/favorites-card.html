@@ -1,0 +1,87 @@
+<div class="well">
+
+  <div class="row">
+    <div class="col-xs-10 heading">
+      <h1>Favorites</h1>
+      <div class="text-muted mt10">View connections of up to 4 in each category</div>
+    </div>
+    <div class="col-xs-2">
+     <a class="pull-right" [class.hidden]='!hasAuth' (click)="showRelations()">
+       <i class="grunticon-relate" [class.active]="showRelate" [class.disabled]="disableRelate"></i>
+     </a>
+    </div>
+  </div>
+
+  <hr>
+
+  <ul class="nav nav-tabs">
+    <li class="nav-item text-center" (click)="setTab('school')" [class.active]="tab == 'school' && !showRelate">
+      <a class="nav-link" href="javascript:void('school')">
+        <span>Schools</span>
+        <i routerLink="/search/schools" class="icon icon-magnifying-glass hidden-sm hidden-xs"></i>
+      </a>
+
+    </li>
+    <li class="nav-item text-center" (click)="setTab('major')" [class.active]="tab == 'major' && !showRelate">
+      <a class="nav-link" href="javascript:void('major')">
+        <span>Majors</span>
+        <i routerLink="/search/majors" class="icon icon-magnifying-glass hidden-sm hidden-xs"></i>
+      </a>
+    </li>
+    <li class="nav-item text-center" (click)="setTab('occupation')" [class.active]="tab == 'occupation' && !showRelate">
+      <a class="nav-link" href="javascript:void('occupation')">
+        <span>Occupations</span>
+        <i routerLink="/search/occupations" class="icon icon-magnifying-glass hidden-sm hidden-xs"></i>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="list-group favorites mt5" [class.hidden]="showRelate">
+
+    <div *ngIf="favorites?.length == 0 && !favorites?.hasError" class="empty text-center">
+      <div>
+        You haven’t added any favorites yet.<br>
+        Click the <i class="icon grunticon-star text-warning"></i> next to any <span
+          class="text-capitalize">{{tab}}</span>
+        you want to save.
+      </div>
+      <button class="btn btn-default" routerLink="/search/{{tab}}s">Search <span class="text-capitalize">{{tab}}s</span></button>
+    </div>
+
+    <div *ngIf="!favorites"><br>Loading...</div>
+
+    <div *ngIf="favorites?.hasError" class="text-center">
+      <img class="error" src="/images/500.jpg" alt="500 error">
+      <h3>Sorry, but something may be broken on our side. <br> We'll check into the problem but try refreshing the page.</h3>
+    </div>
+
+
+    <li *ngFor="let f of favorites">
+      <div class="clickable fav-item" [class.active]="f.isSelected" (click)="toggleSelect(f)">
+        {{f.userFavoriteItemName}}
+      </div>
+    </li>
+  </ul>
+
+  <div class="relate-wrapper" [class.hidden]="!showRelate">
+    <div class="relate-frame">
+      <relate-chart [read_only]="true" [toggleResize]="showRelate" (callback)="messageReceived($event)"></relate-chart>
+    </div>
+    <a class="pull-right relate-link" (click)="editRelations()" href="javascript:void('relate')" >Explore full view <span class="icon-triangle-right"></span></a>
+  </div>
+
+  <div class="limit-warning" *ngIf="maxReached && !showRelate">
+    <hr class="text-info">
+    <i class="icon-warning text-info"></i>
+    <p>
+      You're at the limit of 4 {{tab}}s to view in Relate Favorites. To choose another, first deselect a highlighted
+      {{tab}} in the list.
+    </p>
+  </div>
+
+</div>
+
+<!--<div class="text-center">-->
+  <!--<img class="error" src="/images/500.jpg" alt="500 error">-->
+  <!--<h3>Sorry, but something may be broken on our side. <br> We'll check into the problem but try refreshing the page.</h3>-->
+<!--</div>-->

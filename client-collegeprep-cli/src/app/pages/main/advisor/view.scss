@@ -1,0 +1,234 @@
+@import '../../../variables';
+
+$noteHeight: 508px;
+$contentHeight: 333px;
+
+.pos-relative {
+  min-height: 400px;
+}
+
+.well {
+  padding: 0;
+}
+
+.list {
+  max-height: $noteHeight;
+  overflow-y: auto;
+}
+
+aside {
+  color: #555;
+  max-width: 100%;
+  min-width: 100%;
+  hr {
+    width: 100%;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    list-style-type: none;
+    padding: 20px;
+    min-height: 65px;
+    font-size: 16px;
+    border-bottom: 1px solid #CCC;
+    cursor: pointer;
+    &:hover:not(.text-primary):not(.disabled) {
+      color: $pathevoBlue;
+      border-right: 3px solid $pathevoBlue;
+    }
+
+    &.active {
+      font-weight: bolder;
+      color: #333;
+      border-right: 3px solid $pathevoBlue;
+    }
+    & > a {
+      word-wrap: break-word;
+      color: inherit;
+      &:hover {
+        color: $pathevoBlue;
+      }
+    }
+  }
+}
+
+#title, #m-title, #m-content, #content {
+  box-shadow: none;
+}
+
+textarea {
+  max-width: 100%;
+  min-height: 200px;
+}
+
+.draft {
+
+  padding: 15px 30px 15px 15px;
+
+  textarea {
+    background-color: #fff;
+    min-height: 200px;
+  }
+  ul {
+    list-style: none;
+    &.attachments {
+      padding: 0;
+      list-style: none;
+      a {
+        font-size: 12px;
+        color: #777;
+        &:hover {
+          color: $pathevoBlue;
+        }
+      }
+    }
+  }
+}
+
+.message {
+  border-bottom: 1px solid #ccc;
+  padding: 20px 0 10px;
+  &:first-child {
+    padding-top: 0
+  }
+  h3 {
+    display: inline;
+    margin: 0 40px 0 20px;
+  }
+  .time {
+    color: #ccc;
+  }
+  .filename {
+    color: #ccc;
+  }
+  p {
+    margin-top: 10px;
+  }
+}
+
+.msg-advisor {
+  color: $navyBlue;
+}
+
+.file-upload {
+  background: none;
+  border: none;
+  & > * {
+    display: inline;
+  }
+  &:hover span {
+    color: $pathevoBlue;
+  }
+  .icon-attachment {
+    font-size: 25px;
+  }
+}
+
+.send-message {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  font-size: 25px;
+  line-height: 0;
+  .icon-paper-plane:before {
+    margin-right: 3px;
+  }
+}
+
+#question {
+  font-weight: 300;
+  background-color: #fff;
+}
+
+//.loader {
+//  border: 6px solid #f3f3f3; /* Light grey */
+//  border-top: 6px solid $pathevoBlue; /* Blue */
+//  border-radius: 50%;
+//  width: 30px;
+//  height: 30px;
+//  animation: spin 1s linear infinite;
+//}
+
+.has-feedback {
+  & > textarea {
+    padding-right: 15px;
+  }
+  & > input {
+    padding-right: 40px;
+  }
+}
+
+@media (min-width: $sm) {
+  .well {
+    min-height: $noteHeight;
+  }
+  .list {
+    padding-right: 0;
+  }
+  .draft {
+    border-left: 1px solid #ccc;
+    min-height: $noteHeight;
+  }
+  .full-descript {
+    & > div:first-child {
+      width: calc(100% - 70px);
+    }
+    & > div:last-child {
+      width: 50px;
+      padding: 0;
+    }
+  }
+  .attach-col > small {
+    margin-top: 3px;
+    float: right;
+  }
+}
+
+@media (max-width: $sm - 1) {
+  .attach-col {
+    margin-top: 10px;
+  }
+  .list {
+    max-height: 100%;
+  }
+  aside li:last-child {
+    border-bottom: none !important;
+  }
+  .container {
+    padding: 0;
+  }
+  .well {
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+  }
+  .header {
+    padding: 0 15px;
+  }
+  .draft {
+    background-color: #f8f8f8;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    right: -100%;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, .08);
+    z-index: 900;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 20px 15px;
+    transition: right .3s linear;
+    &.active {
+      display: block;
+      right: 0;
+    }
+  }
+  .btn-sm {
+    width: 115px;
+    & > span {
+      margin: 0 20px 0 5px;
+    }
+  }
+}
